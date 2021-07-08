@@ -1,0 +1,19 @@
+<!-- class binding -->
+<h1>
+  <i class="glyphicon "
+  [class.glyphicon-star-empty]="!meuFavorito" 
+  [class.glyphicon-star]="meuFavorito"
+  (click)="onClick()"></i>
+</h1>
+<!-- Troca de ícone conforme clica no ícone -->
+
+<!-- ngClass é uma alternativa ao Class binding quando temos várias classes para se trabalhar
+deixando o código mais legível-->
+<h1>
+  <i class="glyphicon "
+  [ngClass]="{
+    'glyphicon-star-empty': !meuFavorito,
+    'glyphicon-star': meuFavorito
+  }" 
+  (click)="onClick()"></i>
+</h1>

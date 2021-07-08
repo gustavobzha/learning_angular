@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+  <div class="nav navbar-nav">
+    <a class="nav-item nav-link" 
+    [class.active]="aba == 'home'"
+    (click)="aba = 'home'">Home</a>
+    <!-- class.active destaca o Home quando a variável aba é igual a home -->
+    <a class="nav-item nav-link" 
+    [class.active]="aba == 'feature'"
+    (click)="aba = 'feature'">Features</a>
+    <a class="nav-item nav-link" 
+    [class.active]="aba == 'pricing'"
+    (click)="aba = 'pricing'">Pricing</a>
+    <a class="nav-item nav-link" 
+    [class.active]="aba == 'about'"
+    (click)="aba = 'about'">About</a>
+  </div>
+</nav>
+
+<div class="container" [ngSwitch]="aba"> <!-- Utilizamos o property binding porque temos que ficar escutando o valor a nossa variável-->
+  <p *ngSwitchCase="'feature'">Page Features</p> <!-- Case -->
+  <p *ngSwitchCase="'pricing'">Page Pricing</p> <!-- Case -->
+  <p *ngSwitchCase="'about'">Page About</p> <!-- Case -->
+  <p *ngSwitchDefault>Home</p> <!-- Default case -->
+</div>

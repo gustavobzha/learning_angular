@@ -1,0 +1,7 @@
+<div>
+  <!-- click como um event binding -->
+  <button class="btn btn-primary" (click)="decrementa()">-</button> <!-- class btn btn-primary do bootstrap -->
+  <input type="text" [value]="valor" readonly #campoInput> <!-- readonly(atributo do html que não deixa o usuário editar o campo) -->
+  <!-- valor pode ser passado por um property binding ou uma interpolação -->
+  <button class="btn btn-primary" (click)="incrementa()">+</button> <!-- class btn btn-primary do bootstrap -->
+</div>

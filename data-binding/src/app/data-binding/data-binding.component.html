@@ -1,0 +1,169 @@
+<section>
+
+  <article>
+    <h3>Interpolation / Interpolação</h3>
+    <p>String renderizada com interpolação: {{ url }}</p>
+    <p>Resultado de 1 + 1 é: {{ 1 + 1 }}</p>
+    <p>Resultado de 1 + 1 não é {{ 1 + 1 + getValor() }}</p>
+    <p>Curso de Angular e gosto do curso: {{ cursoAngular && getCurtirCurso() }}</p>
+  </article>
+
+  <article>
+    <h3>Property Binding</h3>
+    <img src="{{ urlImage }}"> <!-- Interpolação -->
+    <br>
+    <img [src]="urlImage">
+    <!-- Property Binding ambos fazer a mesma cois, mas necessita de uma propriedade para se colocar os colchetes ou a notação "bind-" -->
+    <br>
+    <img bind-src="urlImage"> <!-- Property Binding sem o sintax sugar -->
+
+    <!-- Quando não existe uma propriedade no elemento pode-se usar "attr." mas dificilmente é usado e não é recomendado -->
+
+  </article>
+
+  <article>
+    <h3>Class e Style Binding</h3>
+    <div>
+      Selecione uma classe:
+      <!-- A ideia é ter um dropdown com as opções de alerta do bootstrap-->
+      <select #valorAlerta (change)="0">
+        <!-- change é um event binding que será explicado mais a frente -->
+        <!-- Variavel local de template para receber o valor da opção, nessa caso a variável é valorAlerta -->
+        <option value="alert-success">Sucesso</option>
+        <option value="alert-info">Info</option>
+        <option value="alert-warning">Alerta</option>
+        <option value="alert-danger">Erro</option>
+      </select>
+      <br><br>
+
+      <div class="alert {{ valorAlerta.value }}" role="alert"> <!-- Class binding com interpolação -->
+        Texto colorido conforme valor do combobox
+      </div>
+
+      <!-- A ideia é o aparecer o alerta apenas quando ele for selecionado -->
+      <div class="alert" role="alert" [class.alert-success]="valorAlerta.value == 'alert-success'">
+        <!-- Class binding / caso o valor aplicado no combo box (dropdown) seja alert-success, a classe alert-success é aplicada-->
+        Sucesso
+      </div>
+      <div class="alert" role="alert" [class.alert-info]="valorAlerta.value == 'alert-info'">
+        <!-- Class binding-->
+        Info
+      </div>
+      <div class="alert" role="alert" [class.alert-warning]="valorAlerta.value == 'alert-warning'">
+        <!-- Class binding-->
+        Alerta
+      </div>
+      <div class="alert" role="alert" [class.alert-danger]="valorAlerta.value == 'alert-danger'">
+        <!-- Class binding-->
+        Erro
+      </div>
+
+
+      <div class="alert alert-danger" role="alert" [style.display]="valorAlerta.value == 'alert-danger' ? 'block' : 'none'">
+        <!-- Style binding , se o valor for alert-danger o estilo do display será block, se não for igual o estilo será nenhum, com isso a div não aparece na tela-->
+        Esse texto somente aparece em caso de erro
+      </div>
+
+    </div>
+  </article>
+
+
+  <article>
+    <h3>Event binding</h3>
+    <div>
+      <!-- No property binding utilizamos colchetes para mostrar ao angular que queremos utilizar um binding de propriedade -->
+      <!-- No event binding utlizamos parênteses para mostrar ao angular que se trata de binding de evento-->
+      <!-- Da mesma forma que o Property binding tem o bind- , quando colocamos parêntes estamos colocando o on- , ou seja
+      se colocássemos on-click no lugar de (click) também daria certo, mas a nível de leitura de código é mais indicado utilizar parênteses -->
+      <button (click)="botaoClicado()" 
+      class="btn btn-primary"> Me clique!</button> 
+      <!-- Ao clicar no botão, ele executa o método que foi criado no nosso component -->
+
+      <br><br>
+
+      <!-- <input type="text"
+      (keyup)="onKeyUp($event)"
+      (keyup.enter)="salvarValor($event.target.value)"
+      (blur)="salvarValor($event.target.value)"/>  Utilizando o event.target-->
+      <input type="text"
+      (keyup)="onKeyUp($event)"
+      (keyup.enter)="salvarValor(campoInput.value)"
+      (blur)="salvarValor(campoInput.value)"
+      #campoInput/> <!-- Utilizando uma variável local para salvar o event.target -->
+      <!-- Key up é quando você acaba de apertar uma tecla no teclado -->
+      <!-- Para fazer referência a um evento, passando ele ao método precisamos utlizar o $ -->
+      <!-- Blur é quando o evento perde o foco, no caso quando você está com o cursor dentro da caixa de texto
+      e clica fora da caixa de texto -->
+
+      <p>Valor atual: {{ valorAtual }}</p>
+      <p>Valor salvo: {{ valorSalvo }}</p>
+
+      <br>
+      <span
+      (mouseover)="onMouseOverOut()"
+      (mouseout)="onMouseOverOut()"
+      [class.highlight]="isMouseOver">Passe o mouse sobre mim</span> <!-- só fica com highlight se isMouseOver for true -->
+
+    </div>
+  </article>
+
+  <br><br>
+
+  <article>
+    <h3>Two-way data binding</h3>
+    <div>
+
+      <input type="text"
+      [value]="nome"
+      (input)="nome = $event.target.value"
+      />
+      <!-- evento input é acionado sempre que o campo é atualizado -->
+
+      <input type="text"
+      [ngModel]="nome"
+      (ngModelChange)="nome = $event"
+      />
+      <!-- com o ngModel não precisamos do .target.value, pois ele se encarrega disso -->
+      <!-- ainda não utilizamos o Two-way binding, esses dois inputs acima são inputs com um binding de propriedade 
+      e um binding de evento -->
+
+      <input type="text" [(ngModel)]="nome"> <!--Two-way data binding -->
+
+      <input type="text" bindon-ngModel="nome"> <!--Two-way data binding -->
+
+      <p>Você digitou: {{ nome }}</p>
+
+      <h5>Two-way data binding com objetos</h5>
+
+      <p>Meu nome {{ pessoa.nome }} e tenho {{ pessoa.idade }} anos</p>
+      <input type="text" [(ngModel)]="pessoa.nome">
+      <input type="text" [(ngModel)]="pessoa.idade">
+
+    </div>
+  </article>
+
+</section>
+
+<section>
+
+  <article>
+    <h3>Input/Output Properties</h3>
+
+    <app-curso [nome]="nomeDoCurso"></app-curso>
+    <!-- O "nome" não é um propriedade conhecida do html, gerando um erro -->
+    <!-- nesse caso temos que ir até o .component.ts do app-curso e declarar a variável -->
+  </article>
+
+
+  <!-- Disparar um evento "mudou" toda vez que o suário clicar nos botões de + ou - ,
+  Evento recebe novo valor do input -->
+  <!-- <contador valor="10"></contador> -->
+  <!-- Quando se passa um valor fixo (hard coded) não precisa passar como property binding -->
+  <contador [valor]="valorInicial"
+    (mudouValor)="onMudouValor($event)" 
+  ></contador> <!-- Criando um event binding, onde quando o usuário apertar o botão de incrementar
+  ou decrementar, será lançado um evento pelo métodos de incrementa e decrementa e o método 
+  onMudouValor situado no data-binding.component.ts receberá esse evento -->
+  <!-- Passando uma variável declarada em data-binding.component.ts, é necessário utilizar property binding -->
+
+</section>
