@@ -1,0 +1,21 @@
+<!-- Navbar retirada do site materializecss.com em Components->Navbar -->
+<nav>
+  <div class="nav-wrapper">
+    <a routerLink="" class="brand-logo right">Rotas Ng2</a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <!-- active é uma classe do materialize (bootstrap também posusi) onde se o item estiver ativo ele
+      fica destacado na navbar, routerlinkactive é uma propriedade de router que aplica uma classe quando
+      a rota está ativa -->
+      <li routerLinkActive="active"><a routerLink="/login">Login</a></li>
+      <li routerLinkActive="active"><a routerLink="/cursos">Cursos</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['curso',idCurso.value]">Curso com id</a></li>
+      <!-- utilizar o / no path do routerLink é opcional para rotas raiz, diferente do .routing.ts que não necessita. -->
+    </ul>
+  </div>
+</nav>
+<!-- classe container pertence ao materialize css e apenas aplica uma margem. -->
+<div class="container">
+  <p>Entre com o id do curso</p>
+  <input #idCurso type="text">
+  <router-outlet></router-outlet>
+</div>
